@@ -1,0 +1,19 @@
+GET /index.html HTTP/1.1
+Host: example.com
+User-Agent: Mozilla/5.0
+Accept: text/html
+Connection: keep-alive
+
+POST /login HTTP/1.1
+Host: example.com
+User-Agent: Mozilla/5.0
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 29
+username=user&password=12345
+
+
+DELETE /users/123 HTTP/1.1
+Host: example.com
+User-Agent: Mozilla/5.0
+Authorization: Bearer abc123token
+Connection: close
