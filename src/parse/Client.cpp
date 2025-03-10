@@ -1,40 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   webserv.h                                          :+:      :+:    :+:   */
+/*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: isainz-r <isainz-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/05 19:24:32 by isainz-r          #+#    #+#             */
-/*   Updated: 2025/03/05 19:24:34 by isainz-r         ###   ########.fr       */
+/*   Created: 2025/03/07 11:24:55 by isainz-r          #+#    #+#             */
+/*   Updated: 2025/03/07 11:24:57 by isainz-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#include "../WebServ.hpp"
+#include "Client.hpp"
+#include "Requests.hpp"
 
-# include <iostream>
-# include <vector>
-# include <map>
-
-class	Server;
-
-class WebServ
+Client::Client( void )
 {
-	private:
-		Server	*server[];
-
-	public:
-		WebServ( void );
-		~WebServ();
-};
-
-WebServ::WebServ( void )
-{
+	this->requests = new Requests[this->num_requests];
 }
 
-WebServ::~WebServ()
+Client::~Client()
 {
+	delete[] this->requests;
 }
-
-
-int	ConfigFile();

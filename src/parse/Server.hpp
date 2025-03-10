@@ -11,29 +11,23 @@
 /* ************************************************************************** */
 
 #pragma once
-# include "../../WebServ.hpp"
+# include "../WebServ.hpp"
+# include "Locations.hpp"
 
 class Server
 {
 	private:
 		int									listen;
-		std::string							server_name;
+		std::string							server_name; // oprtional
+		int									allowed_methods[3] = {0, 0, 0}; //GET POST DELETE
+		int									autoindex = 0;
 		std::string							root;
 		std::map<int, std::string>			error_pages;
 		std::string							index;
-		std::map<std::string, std::string>	*locations;
-		int									allowed_methods[3] = {0, 0, 0}; //GET POST DELETE
+		int									num_locations;
+		Locations							*locations;
 
 	public:
 		Server( void );
 		~Server();
 };
-
-Server::Server( void )
-{
-}
-
-Server::~Server()
-{
-}
-

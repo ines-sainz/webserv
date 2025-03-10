@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   webserv.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: isainz-r <isainz-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/04 11:16:16 by isainz-r          #+#    #+#             */
-/*   Updated: 2025/03/04 11:16:18 by isainz-r         ###   ########.fr       */
+/*   Created: 2025/03/05 19:24:32 by isainz-r          #+#    #+#             */
+/*   Updated: 2025/03/05 19:24:34 by isainz-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "WebServ.hpp"
+#pragma once
 
-int	main(int argc, char **argv)
+# include <iostream>
+# include <vector>
+# include <map>
+
+class	Server;
+class	Client;
+
+class WebServ
 {
-	WebServ	webserv;
+	private:
+		int		num_servers;
+		Server	*server;
+		Client	*clients;
 
-	if (argc != 2)
-	{
-		std::cout << "Error: need only one configuration file" << std::endl;
-		return (1);
-	}
-	if (webserv.ConfigFile(argv[1]) == 1)
-		return (1);
-}
+	public:
+		int	ConfigFile(char *file_name);
+
+		WebServ( void );
+		~WebServ();
+};
+

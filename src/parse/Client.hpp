@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: isainz-r <isainz-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/04 11:16:16 by isainz-r          #+#    #+#             */
-/*   Updated: 2025/03/04 11:16:18 by isainz-r         ###   ########.fr       */
+/*   Created: 2025/03/07 11:25:00 by isainz-r          #+#    #+#             */
+/*   Updated: 2025/03/07 11:25:02 by isainz-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "WebServ.hpp"
+#pragma once
+# include "../WebServ.hpp"
+# include "Requests.hpp"
 
-int	main(int argc, char **argv)
+class Client
 {
-	WebServ	webserv;
+	private:
+		int			num_requests;
+		Requests	*requests;
 
-	if (argc != 2)
-	{
-		std::cout << "Error: need only one configuration file" << std::endl;
-		return (1);
-	}
-	if (webserv.ConfigFile(argv[1]) == 1)
-		return (1);
-}
+	public:
+		Client( void );
+		~Client();
+};

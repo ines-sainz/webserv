@@ -10,7 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../WebServ.hpp"
+#include "../WebServ.hpp"
+#include "Server.hpp"
+#include "Locations.hpp"
 
-int	Server()
-{}
+Server::Server( void )
+{
+	this->locations = new Locations[this->num_locations];
+}
+
+Server::~Server()
+{
+	delete[] this->locations;
+}

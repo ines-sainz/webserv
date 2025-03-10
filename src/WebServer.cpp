@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   WebServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: isainz-r <isainz-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/04 11:16:16 by isainz-r          #+#    #+#             */
-/*   Updated: 2025/03/04 11:16:18 by isainz-r         ###   ########.fr       */
+/*   Created: 2025/03/07 10:52:13 by isainz-r          #+#    #+#             */
+/*   Updated: 2025/03/07 10:52:15 by isainz-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "WebServ.hpp"
+#include "parse/Server.hpp"
 
-int	main(int argc, char **argv)
+int	ConfigFile(char *file_name);
+
+WebServ::WebServ( void )
 {
-	WebServ	webserv;
+	//int	num_servers = 1;
 
-	if (argc != 2)
-	{
-		std::cout << "Error: need only one configuration file" << std::endl;
-		return (1);
-	}
-	if (webserv.ConfigFile(argv[1]) == 1)
-		return (1);
+	//this->server = new Server[num_servers];
 }
+
+WebServ::~WebServ()
+{
+	delete[] this->server;
+}
+

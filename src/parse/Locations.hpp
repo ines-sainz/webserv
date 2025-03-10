@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Locations.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: isainz-r <isainz-r@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/04 11:16:16 by isainz-r          #+#    #+#             */
-/*   Updated: 2025/03/04 11:16:18 by isainz-r         ###   ########.fr       */
+/*   Created: 2025/03/07 10:35:36 by isainz-r          #+#    #+#             */
+/*   Updated: 2025/03/07 10:35:38 by isainz-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "WebServ.hpp"
+#pragma once
+# include "../WebServ.hpp"
 
-int	main(int argc, char **argv)
+class Locations
 {
-	WebServ	webserv;
+	private:
+		std::string							path;
+		int									allowed_methods[3] = {0, 0, 0};
+		int									autoindex = 0;
+		std::map<std::string, std::string>	content;
 
-	if (argc != 2)
-	{
-		std::cout << "Error: need only one configuration file" << std::endl;
-		return (1);
-	}
-	if (webserv.ConfigFile(argv[1]) == 1)
-		return (1);
+	public:
+		Locations( void );
+		~Locations();
+};
+
+Locations::Locations( void )
+{
 }
+
+Locations::~Locations()
+{
+}
+
