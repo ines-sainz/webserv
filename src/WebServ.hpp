@@ -13,6 +13,7 @@
 #pragma once
 
 # include <iostream>
+# include <fstream>
 # include <vector>
 # include <map>
 
@@ -22,7 +23,7 @@ class	Client;
 class WebServ
 {
 	private:
-		int		num_servers;
+		int		num_servers = 0;
 		Server	*server;
 		Client	*clients;
 
