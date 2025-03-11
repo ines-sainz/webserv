@@ -13,12 +13,18 @@
 #include "WebServ.hpp"
 #include "parse/Server.hpp"
 
+void	split_line(std::vector<std::string> *splitted_line)
+{
+	std::string	compare = " \t";
+}
+
 int	WebServ::ConfigFile(char *file_name)
 {
 	std::ifstream				server_fd;
 	std::vector<std::string>	server_file;
 	std::vector<std::string>	splitted_line;
 	std::string					lines;
+	int							is_server = 0;
 
 
 	server_fd.open(file_name, std::ios::in);
@@ -29,7 +35,9 @@ int	WebServ::ConfigFile(char *file_name)
 	}
 	while (std::getline(server_fd, lines))
 	{
-		splitted_line = split(lines);
+		split_line(&splitted_line, &is_server);
+		first_splitted = splitted_line.back();
+		server_file.push_back(lines);
 	}	
 
 }

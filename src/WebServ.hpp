@@ -34,3 +34,4 @@ class WebServ
 		~WebServ();
 };
 
+void	split_line(std::vector<std::string> splitted_line);
