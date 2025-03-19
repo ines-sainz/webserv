@@ -30,12 +30,3 @@ class Requests
 		Requests( void );
 		~Requests();
 };
-
-Requests::Requests( void )
-{
-}
-
-Requests::~Requests()
-{
-}
-

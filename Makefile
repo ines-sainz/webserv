@@ -19,7 +19,12 @@ CFLAGS = -Wall -Werror -Wextra -std=c++98 -g3
 PARSE_DIR	= src/parse
 
 SRCS		= src/main.cpp \
-			$(PARSE_DIR)/parse.cpp
+			src/WebServer.cpp \
+			src/split.cpp \
+			$(PARSE_DIR)/Client.cpp \
+			$(PARSE_DIR)/Locations.cpp \
+			$(PARSE_DIR)/Requests.cpp \
+			$(PARSE_DIR)/Server.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -32,7 +37,7 @@ r: fclean all
 	./$(NAME) files/webserv.config
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -I $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 clean:
 	rm -rf $(OBJS)

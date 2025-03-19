@@ -17,20 +17,11 @@ class Locations
 {
 	private:
 		std::string							path;
-		int									allowed_methods[3] = {0, 0, 0};
-		int									autoindex = 0;
+		int									allowed_methods[3];
+		int									autoindex;
 		std::map<std::string, std::string>	content;
 
 	public:
 		Locations( void );
 		~Locations();
 };
-
-Locations::Locations( void )
-{
-}
-
-Locations::~Locations()
-{
-}
-

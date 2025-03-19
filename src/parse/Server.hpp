@@ -17,10 +17,11 @@
 class Server
 {
 	private:
-		int									listen;
+		int									listen_port;
+		int									listen_ip;
 		std::string							server_name; // oprtional
-		int									allowed_methods[3] = {0, 0, 0}; //GET POST DELETE
-		int									autoindex = 0;
+		int									allowed_methods[3]; //GET POST DELETE
+		int									autoindex;
 		std::string							root;
 		std::map<int, std::string>			error_pages;
 		std::string							index;
@@ -28,6 +29,15 @@ class Server
 		Locations							*locations;
 
 	public:
+		int	setCgi();
+		int	setLocation();
+		int	setErrorPage();
+		int	setAllowMethods();
+		int	setIndex();
+		int	setRoot();
+		int	setServerName();
+		int	setListen();
+		int	setVariable(std::vector<std::string> variable);
 		Server( void );
 		~Server();
 };

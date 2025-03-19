@@ -10,4 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Locations.hpp"
 
+Locations::Locations( void )
+{
+	this->autoindex = 0;
+	this->allowed_methods[0] = 0;
+	this->allowed_methods[1] = 0;
+	this->allowed_methods[2] = 0;
+}
+
+Locations::~Locations()
+{
+}

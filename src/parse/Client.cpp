@@ -16,6 +16,7 @@
 
 Client::Client( void )
 {
+	num_requests = 0;
 	this->requests = new Requests[this->num_requests];
 }
 

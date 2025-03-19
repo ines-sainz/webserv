@@ -23,15 +23,18 @@ class	Client;
 class WebServ
 {
 	private:
-		int		num_servers = 0;
+		std::vector<std::string>	server_file;
+		int		num_servers;
 		Server	*server;
-		Client	*clients;
+		int		num_clients;
+		Client	*client;
 
 	public:
+		int	openAndStoreFile(char *file_name);
 		int	ConfigFile(char *file_name);
 
 		WebServ( void );
 		~WebServ();
 };
 
-void	split_line(std::vector<std::string> splitted_line);
+void	splitLine(std::vector<std::string> *splitted, std::string to_split, std::string str);

@@ -10,4 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Requests.hpp"
 
+Requests::Requests( void )
+{
+}
+
+Requests::~Requests()
+{
+}

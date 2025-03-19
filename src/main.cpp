@@ -11,16 +11,25 @@
 /* ************************************************************************** */
 
 #include "WebServ.hpp"
+#include "parse/Client.hpp"
+#include "parse/Locations.hpp"
+#include "parse/Server.hpp"
+#include "parse/Requests.hpp"
 
 int	main(int argc, char **argv)
 {
-	WebServ	webserv;
-
 	if (argc != 2)
 	{
 		std::cout << "Error: need only one configuration file" << std::endl;
 		return (1);
 	}
+
+	WebServ	webserv;
 	if (webserv.ConfigFile(argv[1]) == 1)
+	{
+		std::cout << "DB: config file error" << std::endl;
 		return (1);
+	}
+	std::cout << "DB: everything is ok" << std::endl;
+	return (0);
 }
