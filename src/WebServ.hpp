@@ -25,6 +25,7 @@ class WebServ
 	private:
 		std::vector<std::string>	server_file;
 		int		num_servers;
+		int		num_locations;
 		Server	*server;
 		int		num_clients;
 		Client	*client;

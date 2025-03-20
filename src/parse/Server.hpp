@@ -25,17 +25,18 @@ class Server
 		std::string							root;
 		std::map<int, std::string>			error_pages;
 		std::string							index;
-		int									num_locations;
 		Locations							*locations;
 
 	public:
+		int	num_locations;
+
+		int	setLocation(std::vector<std::string> locations);
 		int	setCgi();
-		int	setLocation();
 		int	setErrorPage();
-		int	setAllowMethods();
-		int	setIndex();
+		int	setAllowMethods(std::vector<std::string> variable);
+		int	setIndex(std::vector<std::string> variable);
 		int	setRoot();
-		int	setServerName();
+		int	setServerName(std::vector<std::string> variable);
 		int	setListen();
 		int	setVariable(std::vector<std::string> variable);
 		Server( void );

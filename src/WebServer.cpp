@@ -16,8 +16,8 @@
 
 int	WebServ::openAndStoreFile(char *file_name)
 {
-	std::ifstream				server_fd;
-	std::string					lines;
+	std::ifstream	server_fd;
+	std::string		lines;
 
 	this->num_servers = 0;
 	server_fd.open(file_name, std::ios::in);
@@ -47,17 +47,23 @@ int	WebServ::ConfigFile(char *file_name)
 	int num_locations = 0; /////////////////////////////////////////////////////////////borrar
 	if (openAndStoreFile(file_name) == 1)
 		return (1);
-	std::vector<std::string>::iterator it = server_file.begin();
-	int	is_server = 0;
-	int	is_location = 0;
+	std::vector<std::string>::iterator	it = server_file.begin();
+	int									is_server = 0;
+	int 								i = -1;
+	std::vector<std::string> 			variable;
+	std::vector<std::string>::iterator	it2 = variable.begin();
+	std::vector<std::string>			locations;
+	std::vector<std::string>			locations_temp;
+
 	this->server = new Server[num_servers];
-	int i = -1;
-	std::vector<std::string> variable;
-	std::vector<std::string>::iterator it2 = variable.begin();
 	while (it != this->server_file.end())
 	{
-		splitLine(&variable, *it, " \t");
-		it2 = variable.begin();
+		splitLine(&variable, *it, "; \t");
+		if (variable.size() == 0)
+		{
+			std::cout << "Error: line without information" << std::endl;
+			return (1);
+		}
 		if (*variable.begin() == "server")
 		{
 			if (is_server == 1 || *it != "server {")
@@ -75,30 +81,57 @@ int	WebServ::ConfigFile(char *file_name)
 		}
 		if (*variable.begin() == "location") //correct this
 		{
-			if (is_location == 1)
+			if (variable.size() != 3 || variable.back() != "{")
 			{
 				std::cout << "Error: Location not well written" << std::endl;
 				return (1);
 			}
 			num_locations++;
-			is_location = 1;
+			it2 = variable.begin();
+			while (it2 != variable.end())
+			{
+				locations.push_back(*it2);
+				it2++;
+			}
+			it++;
+			while (it != this->server_file.end())
+			{
+				locations_temp.clear();
+				splitLine(&locations_temp, *it, "; \t");
+				if (locations_temp.size() == 0)
+				{
+					std::cout << "Error: line without information" << std::endl;
+					return (1);
+				}
+				locations.push_back(*it);
+				if (*locations_temp.begin() == "}")
+					break ;
+				it++;
+			}
 		}
 		if (*variable.begin() == "}")
 		{
-			if (is_location == 1)
-				is_location = 0;
-			else if (is_server == 1)
-			{
+			if (is_server == 1 && *it == "}")
+			{	
 				std::cout << "DB: locations " << num_locations << std::endl;
+				if (server[i].setLocation(locations) == 1)
+				{
+					std::cout << "Error: problem setting the location" << std::endl;
+					return (1);
+				}
 				is_server = 0;
 				num_locations = 0;
 			}
+			else
+			{
+				std::cout << "Error: cofig file not well written" << std::endl;
+				return (1);
+			}
+			server[i].num_locations = this->num_locations;
+			locations.clear();
 		}
 		if (server[i].setVariable(variable) == 1)
-		{
-			std::cout << "Error setting variables" << std::endl;
 			return (1);
-		}
 		it++;
 		variable.clear();
 	}
@@ -152,7 +185,7 @@ WebServ::WebServ( void )
 	(void)this->num_servers;
 	(void)this->client;
 	(void)this->server;
-	//int	num_servers = 0;
+	num_locations = 0;
 
 	//this->server = new Server[num_servers];
 	//this->client = new Client[num_clients];
