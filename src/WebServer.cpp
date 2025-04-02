@@ -109,6 +109,11 @@ int	WebServ::ConfigFile(char *file_name)
 				it++;
 			}
 		}
+		else if (num_locations > 0 && *variable.begin() != "}")
+		{
+			std::cout << "Error: information after or between locations" << std::endl;
+			return (1);
+		}
 		if (*variable.begin() == "}")
 		{
 			if (is_server == 1 && *it == "}")

@@ -25,19 +25,27 @@ int	Server::setLocation(std::vector<std::string> locations)
 	return (0);
 }
 
-int	Server::setErrorPage()
+int	Server::setErrorPage(std::vector<std::string> variable)
 {
+	if (variable.size() != 3 || this->error_pages.size() != 0)
+	{
+		std::cout << "Error: error setting error pages" << std::endl;
+		return (1);
+	}
+	int i = 0;
+	
 	return (0);
 }
 
 int	Server::setAllowMethods(std::vector<std::string> variable)
 {
-	if (variable.size() == 1)
+	if (variable.size() <= 1)
 	{
 		std::cout << "Error: error setting allowed methods" << std::endl;
 		return (1);
 	}
 	std::vector<std::string>::iterator it = variable.begin();
+	it++;
 	while (it != variable.end())
 	{
 		if (*it == "GET")
@@ -59,55 +67,141 @@ int	Server::setAllowMethods(std::vector<std::string> variable)
 		}
 		it++;
 	}
+	std::cout << "DB: methods get=" << allowed_methods[0] << " post=" << allowed_methods[1] << " delete=" << allowed_methods[2] << std::endl;
 	return (0);
 }
 
 int	Server::setIndex(std::vector<std::string> variable)
 {
-	if (variable.size() != 2 || variable.back() != "")
+	if (variable.size() != 2 || this->index != "")
 	{
 		std::cout << "Error: error setting index" << std::endl;
 		return (1);
 	}
 	this->index = variable.back();
+	std::cout << "DB: index=" << index << std::endl;
 	return (0);
 }
 
-int	Server::setRoot()
+int	Server::setRoot(std::vector<std::string> variable)
 {
+	if (variable.size() != 2 || this->root != "")
+	{
+		std::cout << "Error: error setting root" << std::endl;
+		return (1);
+	}
+	this->root = variable.back();
+	std::cout << "DB: root=" << root << std::endl;
 	return (0);
 }
 
 int	Server::setServerName(std::vector<std::string> variable)
 {
-	if (variable.size() != 2 || variable.back() != "")
+	if (variable.size() != 2 || this->server_name != "")
 	{
 		std::cout << "Error: error setting server name" << std::endl;
 		return (1);
 	}
 	this->server_name = variable.back();
+	std::cout << "DB: server name=" << server_name << std::endl;
 	return (0);
 }
 
-int	Server::setListen()
+int	Server::setListen(std::vector<std::string> variable)
 {
+	if (variable.size() != 2 || this->server_name != "")
+	{
+		std::cout << "Error: error setting listen ports and ip" << std::endl;
+		return (1);
+	}
+	const unsigned long i = variable.back().find(':');
+	if (i != std::string::npos)
+	{
+		this->listen_ip = variable.back().substr(0, i);
+		if (this->listen_ip.size() > 15)
+		{
+			std::cout << "Error: problem setting ip" << std::endl;
+			return (1);
+		}
+		int j = 0;
+		int	dot = 0;
+		int	num = 0;
+		int	ip_num = 0;
+		char *ip_char = (char *)listen_ip.c_str();
+		if ((listen_ip[0] && isdigit(listen_ip[0]) != 0))
+			num++;
+		else
+		{
+			std::cout << "Error: ip not correct" << std::endl;
+			return (1);
+		}
+		while (listen_ip[j])
+		{
+			if (listen_ip[j] == '.')
+			{
+				if (isdigit(listen_ip[j + 1]) != 0)
+					num++;
+				dot++;
+			}
+			else
+			{
+				if (listen_ip[j] >= '0' && listen_ip[j] <= '9')
+				{
+					ip_num = atoi(&ip_char[j]);
+					if (ip_num > 255)
+					{
+						std::cout << "Error: ip not correct" << std::endl;
+						return (1);
+					}
+				}
+				else
+				{
+					std::cout << "Error: ip not correct" << std::endl;
+					return (1);
+				}
+			}
+			j++;
+		}
+		if (dot != 3 || num != 4)
+		{
+			std::cout << "Error: ip not correct" << " dot " << dot << " num " << num << std::endl;
+			return (1);
+		}
+		std::cout << "DB: ip=" << this->listen_ip << std::endl;
+		const_cast<unsigned long&>(i) = i + 1;
+	}
+	else
+		const_cast<unsigned long&>(i) = 0;
+	std::string port = variable.back().substr(i);
+	if (port.length() > 4)
+	{
+		std::cout << "Error: error setting port" << std::endl;
+		return (1);
+	}
+	this->listen_port = atoi(port.c_str());
+	if (this->listen_port > 9999 || this->listen_port == 0)
+	{
+		std::cout << "Error: error setting port" << std::endl;
+		return (1);
+	}
+	std::cout << "DB: port=" << this->listen_port << std::endl;
 	return (0);
 }
 
 int	Server::setVariable(std::vector<std::string> variable)
 {
 	if (*variable.begin() == "listen")
-		return(setListen());
+		return (setListen(variable));
 	else if (*variable.begin() == "server_name")
 		return (setServerName(variable));
 	else if (*variable.begin() == "root")
-		return (setRoot());
+		return (setRoot(variable));
 	else if (*variable.begin() == "index")
 		return (setIndex(variable));
 	else if (*variable.begin() == "allow_methods")
 		return (setAllowMethods(variable));
 	else if (*variable.begin() == "error_page")
-		return (setErrorPage());
+		return (setErrorPage(variable));
 	else if (*variable.begin() == "location")
 		return (0);
 	else if (*variable.begin() == "server" || *variable.begin() == "}")
@@ -122,7 +216,7 @@ int	Server::setVariable(std::vector<std::string> variable)
 
 Server::Server( void )
 {
-	listen_ip = 0;
+	listen_ip = "";
 	listen_port = 0;
 	server_name = "";
 	this->allowed_methods[0] = 0;
@@ -131,7 +225,7 @@ Server::Server( void )
 	this->autoindex = 0;
 	root = "";
 	(void)error_pages;
-	index = 1;
+	index = "";
 	//this->locations = new Locations[this->num_locations];
 }
 

@@ -18,7 +18,7 @@ class Server
 {
 	private:
 		int									listen_port;
-		int									listen_ip;
+		std::string							listen_ip;
 		std::string							server_name; // oprtional
 		int									allowed_methods[3]; //GET POST DELETE
 		int									autoindex;
@@ -32,12 +32,12 @@ class Server
 
 		int	setLocation(std::vector<std::string> locations);
 		int	setCgi();
-		int	setErrorPage();
+		int	setErrorPage(std::vector<std::string> variable);
 		int	setAllowMethods(std::vector<std::string> variable);
 		int	setIndex(std::vector<std::string> variable);
-		int	setRoot();
+		int	setRoot(std::vector<std::string> variable);
 		int	setServerName(std::vector<std::string> variable);
-		int	setListen();
+		int	setListen(std::vector<std::string> variable);
 		int	setVariable(std::vector<std::string> variable);
 		Server( void );
 		~Server();
