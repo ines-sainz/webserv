@@ -20,6 +20,29 @@ void	WebServ::setStdErrorPages( void )
 	this->std_error_pages[200] = "OK";
 	this->std_error_pages[201] = "Created";
 	this->std_error_pages[204] = "No Content";
+	this->std_error_pages[301] = "Moved Permanently";
+	this->std_error_pages[302] = "Found";
+	this->std_error_pages[303] = "See Other";
+	this->std_error_pages[307] = "Temporary Redirect";
+	this->std_error_pages[308] = "Permanent Redirect";
+	this->std_error_pages[400] = "Bad Request";
+	this->std_error_pages[403] = "Forbidden";
+	this->std_error_pages[404] = "Not Found";
+	this->std_error_pages[405] = "Method Not Allowed";
+	this->std_error_pages[408] = "Request Timeout";
+	this->std_error_pages[413] = "Content Too Large";
+	this->std_error_pages[415] = "Unsupported Media Type";
+	this->std_error_pages[418] = "I'm a teapot";
+	this->std_error_pages[421] = "Misdirected Request";
+	this->std_error_pages[429] = "Too Many Requests";
+	this->std_error_pages[500] = "Internal Server Error";
+	this->std_error_pages[501] = "Not Implemented";
+	this->std_error_pages[505] = "HTTP Version Not Supported";
+	// std::map<int, std::string>::iterator	it = this->std_error_pages.begin();
+	// while (it != this->std_error_pages.end())
+	// {
+	// 	it++;
+	// }
 }
 
 int	WebServ::openAndStoreFile( char *file_name )

@@ -30,6 +30,7 @@ int	main(int argc, char **argv)
 		std::cout << "DB: config file error" << std::endl;
 		return (1);
 	}
+	webserv.setStdErrorPages();
 	std::cout << "DB: everything is ok" << std::endl;
 	return (0);
 }
