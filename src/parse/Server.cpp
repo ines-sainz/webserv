@@ -32,8 +32,22 @@ int	Server::setErrorPage(std::vector<std::string> variable)
 		std::cout << "Error: error setting error pages" << std::endl;
 		return (1);
 	}
-	int i = 0;
-	
+	std::vector<std::string>::iterator	it = variable.begin();
+	it++;
+	if ((*it).length() > 3)
+	{
+		std::cout << "Error: error with error page number" << std::endl;
+		return (1);
+	}
+	int	number = atoi((*it).c_str());
+	if (number < 100 || number >= 600)
+	{
+		std::cout << "Error: error with error page number" << std::endl;
+		return (1);
+	}
+	it++;
+	this->error_pages[number] = *it;
+	std::cout << "error page " << number << " file " << *it << std::endl;
 	return (0);
 }
 

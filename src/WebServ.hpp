@@ -24,16 +24,18 @@ class	Client;
 class WebServ
 {
 	private:
+		std::map<int, std::string>	std_error_pages;
 		std::vector<std::string>	server_file;
-		int		num_servers;
-		int		num_locations;
-		Server	*server;
-		int		num_clients;
-		Client	*client;
+		int							num_servers;
+		int							num_locations;
+		Server						*server;
+		int							num_clients;
+		Client						*client;
 
 	public:
-		int	openAndStoreFile(char *file_name);
-		int	ConfigFile(char *file_name);
+		void	setStdErrorPages( void );
+		int		openAndStoreFile( char *file_name );
+		int		ConfigFile( char *file_name );
 
 		WebServ( void );
 		~WebServ();

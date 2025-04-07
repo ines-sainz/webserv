@@ -14,7 +14,15 @@
 #include "parse/Server.hpp"
 #include "parse/Client.hpp"
 
-int	WebServ::openAndStoreFile(char *file_name)
+void	WebServ::setStdErrorPages( void )
+{
+	this->std_error_pages[100] = "Continue";
+	this->std_error_pages[200] = "OK";
+	this->std_error_pages[201] = "Created";
+	this->std_error_pages[204] = "No Content";
+}
+
+int	WebServ::openAndStoreFile( char *file_name )
 {
 	std::ifstream	server_fd;
 	std::string		lines;
@@ -44,7 +52,7 @@ int	WebServ::openAndStoreFile(char *file_name)
 
 int	WebServ::ConfigFile(char *file_name)
 {
-	int num_locations = 0; /////////////////////////////////////////////////////////////borrar
+	int num_locations = 0;
 	if (openAndStoreFile(file_name) == 1)
 		return (1);
 	std::vector<std::string>::iterator	it = server_file.begin();
@@ -147,42 +155,6 @@ int	WebServ::ConfigFile(char *file_name)
 	}
 	return (0);
 }
-
-// int	WebServ::ConfigFile(char *file_name)
-// {
-// 	std::ifstream				server_fd;
-// 	std::vector<std::string>	server_file;
-// 	std::string					lines;
-// 	std::string					substring;
-// 	std::string					to_compare = "server {";
-// 	int							is_server = 0;
-
-// 	server_fd.open(file_name, std::ios::in);
-// 	while (std::getline(server_fd, lines))
-// 	{
-// 		if (is_server == 0)
-// 		{
-// 			for (size_t i = 0; i < lines.length(); i++)
-// 			{
-// 				if (to_compare.find(lines[i]) == std::string::npos)
-// 					return (1);
-// 				if (lines[i] == ' ')
-// 					continue ;
-// 				else
-// 				{
-// 					substring = lines.substr(i, 6);
-// 					if (substring == "server")
-// 						is_server == 1;
-// 					std::cout << substring << std::endl;
-// 				}
-// 			}
-// 		}
-// 		if (lines == "}")
-// 			is_server = 0;
-// 		server_file.push_back(lines);
-// 	}
-// 	return (0);
-// }
 
 WebServ::WebServ( void )
 {
