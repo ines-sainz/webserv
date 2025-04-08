@@ -41,6 +41,7 @@ void	WebServ::setStdErrorPages( void )
 	// std::map<int, std::string>::iterator	it = this->std_error_pages.begin();
 	// while (it != this->std_error_pages.end())
 	// {
+	// 	std::cout << "DB: " << it->first << " = " << it->second << std::endl;
 	// 	it++;
 	// }
 }

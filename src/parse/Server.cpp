@@ -25,9 +25,44 @@ int	Server::setLocation(std::vector<std::string> locations)
 	return (0);
 }
 
+int	Server::setClientMaxSize(std::vector<std::string> variable)
+{
+	if (variable.size() != 2 || this->client_max_size != 0)
+	{
+		std::cout << "Error: error setting client max size" << std::endl;
+		return (1);
+	}
+	std::string	size = variable.back();
+	unsigned long	i = 0;
+	while (size[i])
+	{
+		if ((i != size.length() - 1 && isdigit(size[i]) == 0) || i > 10)
+		{
+			std::cout << "Error: error with client max size numbers" << std::endl;
+			return (1);
+		}
+		i++;
+	}
+	if (size[size.length() - 1] != 'K' && size[size.length() - 1] != 'M' && size[size.length() - 1] != 'G')
+	{
+		std::cout << "Error: error with client max size units" << std::endl;
+		return (1);
+	}
+	unsigned long	number = atol(size.c_str());
+	if (size[size.length() - 1] != 'K')
+		number *= 1024;
+	else if (size[size.length() - 1] != 'M')
+		number *= 1024 *1024;
+	else if (size[size.length() - 1] != 'G')
+		number *= 1024 * 1024 * 1024;
+	this->client_max_size = number;
+	std::cout << "DB: max_size=" << this->client_max_size << " " << size[size.length() - 1] << std::endl;
+	return (0);
+}
+
 int	Server::setErrorPage(std::vector<std::string> variable)
 {
-	if (variable.size() != 3 || this->error_pages.size() != 0)
+	if (variable.size() != 3)
 	{
 		std::cout << "Error: error setting error pages" << std::endl;
 		return (1);
@@ -47,7 +82,7 @@ int	Server::setErrorPage(std::vector<std::string> variable)
 	}
 	it++;
 	this->error_pages[number] = *it;
-	std::cout << "error page " << number << " file " << *it << std::endl;
+	std::cout << "DB: error page " << number << " file " << *it << std::endl;
 	return (0);
 }
 
@@ -216,6 +251,8 @@ int	Server::setVariable(std::vector<std::string> variable)
 		return (setAllowMethods(variable));
 	else if (*variable.begin() == "error_page")
 		return (setErrorPage(variable));
+	else if (*variable.begin() == "client_max_size")
+		return (setClientMaxSize(variable));
 	else if (*variable.begin() == "location")
 		return (0);
 	else if (*variable.begin() == "server" || *variable.begin() == "}")
@@ -238,6 +275,7 @@ Server::Server( void )
 	this->allowed_methods[2] = 0;
 	this->autoindex = 0;
 	root = "";
+	this->client_max_size = 0;
 	(void)error_pages;
 	index = "";
 	//this->locations = new Locations[this->num_locations];

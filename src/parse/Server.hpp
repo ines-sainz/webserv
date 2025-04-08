@@ -20,11 +20,12 @@ class Server
 		int									listen_port;
 		std::string							listen_ip;
 		std::string							server_name; // oprtional
+		std::string							root;
+		std::string							index;
 		int									allowed_methods[3]; //GET POST DELETE
 		int									autoindex;
-		std::string							root;
+		unsigned long						client_max_size;
 		std::map<int, std::string>			error_pages;
-		std::string							index;
 		Locations							*locations;
 
 	public:
@@ -32,6 +33,7 @@ class Server
 
 		int	setLocation(std::vector<std::string> locations);
 		int	setCgi();
+		int	setClientMaxSize(std::vector<std::string> variable);
 		int	setErrorPage(std::vector<std::string> variable);
 		int	setAllowMethods(std::vector<std::string> variable);
 		int	setIndex(std::vector<std::string> variable);
