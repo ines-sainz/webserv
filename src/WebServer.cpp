@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   WebServer.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isainz-r <isainz-r@student.42madrid>       +#+  +:+       +#+        */
+/*   By: roallamos <roallamos@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 10:52:13 by isainz-r          #+#    #+#             */
-/*   Updated: 2025/03/07 10:52:15 by isainz-r         ###   ########.fr       */
+/*   Updated: 2025/04/27 12:57:58 by roallamos        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,11 @@ int	WebServ::ConfigFile(char *file_name)
 	return (0);
 }
 
+void	WebServ::webServlisten()
+{
+	this->server->startListen();
+}
+
 WebServ::WebServ( void )
 {
 	(void)this->num_clients;
@@ -188,13 +193,13 @@ WebServ::WebServ( void )
 	(void)this->server;
 	num_locations = 0;
 
-	//this->server = new Server[num_servers];
+	this->server = new Server[1];
 	//this->client = new Client[num_clients];
 }
 
 WebServ::~WebServ()
 {
-	//delete[] this->server;
+	delete[] this->server;
 	//delete[] this->client;
 }
 

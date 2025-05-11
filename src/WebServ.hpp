@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   webserv.h                                          :+:      :+:    :+:   */
+/*   WebServ.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isainz-r <isainz-r@student.42madrid>       +#+  +:+       +#+        */
+/*   By: roallamos <roallamos@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 19:24:32 by isainz-r          #+#    #+#             */
-/*   Updated: 2025/03/05 19:24:34 by isainz-r         ###   ########.fr       */
+/*   Updated: 2025/04/27 12:55:00 by roallamos        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <fstream>
 # include <vector>
 # include <map>
+# include <arpa/inet.h>
+# include <fcntl.h>
+# include <unistd.h>
 
 class	Server;
 class	Client;
@@ -36,7 +39,7 @@ class WebServ
 		void	setStdErrorPages( void );
 		int		openAndStoreFile( char *file_name );
 		int		ConfigFile( char *file_name );
-
+		void	webServlisten();
 		WebServ( void );
 		~WebServ();
 };

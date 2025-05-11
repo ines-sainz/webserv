@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ConfigFile.hpp                                     :+:      :+:    :+:   */
+/*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isainz-r <isainz-r@student.42madrid>       +#+  +:+       +#+        */
+/*   By: roallamos <roallamos@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 19:30:27 by isainz-r          #+#    #+#             */
-/*   Updated: 2025/03/05 19:30:30 by isainz-r         ###   ########.fr       */
+/*   Updated: 2025/04/27 12:41:11 by roallamos        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ class Server
 {
 	private:
 		int									listen_port;
+		int									server_fd;// sustituit por vector
+		int 								new_socket;// sustituit por vector
+		struct sockaddr_in 					address;
+		char 								buffer[1024];
+		socklen_t 							addrlen;
 		std::string							listen_ip;
 		std::string							server_name; // oprtional
 		std::string							root;
@@ -41,6 +46,8 @@ class Server
 		int	setServerName(std::vector<std::string> variable);
 		int	setListen(std::vector<std::string> variable);
 		int	setVariable(std::vector<std::string> variable);
+		int	setSocket(void);
+		int	startListen(void);
 		Server( void );
 		~Server();
 };

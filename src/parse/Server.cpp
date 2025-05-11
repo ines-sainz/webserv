@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ConfigFile.cpp                                     :+:      :+:    :+:   */
+/*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isainz-r <isainz-r@student.42madrid>       +#+  +:+       +#+        */
+/*   By: roallamos <roallamos@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 19:30:27 by isainz-r          #+#    #+#             */
-/*   Updated: 2025/03/05 19:30:30 by isainz-r         ###   ########.fr       */
+/*   Updated: 2025/05/11 11:59:52 by roallamos        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,6 +263,60 @@ int	Server::setVariable(std::vector<std::string> variable)
 		return (1);
 	}
 	return (0);
+}
+
+int Server::setSocket(void)
+{
+	this->server_fd = socket(AF_INET, SOCK_STREAM, 0);
+	if (server_fd == 0)
+	{
+		perror("Error al crear socket");
+		exit(EXIT_FAILURE);
+	}
+	address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(this->listen_port);
+	if (bind(server_fd, (struct sockaddr*)&address, sizeof(address)) < 0)
+	{
+        perror("Error en bind");
+        exit(EXIT_FAILURE);
+    }
+	return (0);
+}
+
+int Server::startListen()
+{
+	if (setSocket() == EXIT_FAILURE)
+		exit(EXIT_FAILURE); // esto revisar porque igual debe ser un return
+	if (listen(server_fd, 5) < 0)
+	{
+        perror("Error en listen");
+        exit(EXIT_FAILURE);
+	}	
+	std::cout << "Servidor escuchando por el puerto " << this->listen_port << std::endl;
+	while (1) {
+        if ((new_socket = accept(server_fd, (struct sockaddr*)&address, &addrlen)) < 0) {
+            perror("Error en accept");
+            exit(EXIT_FAILURE);
+        }
+        std::cout << "Nueva conexión aceptada.\n";
+        read(new_socket, buffer, sizeof(buffer));
+        std::cout << "Cliente: "<< buffer << std::endl;
+        int html = open("./src/parse/index.html",O_RDONLY);
+		std::cout << html << " fd"<< std::endl;
+        std::string message;
+		char content[1000];
+        read(html, content, 1000);
+        message = content;
+        message = "HTTP/1.1 200 OK\r\n"
+    	"Content-Type: text/html\r\n"
+    	"Content-Length: 143\r\n"
+    	"\r\n" + message;
+        std::cout << "aquiiiiiiiiiii\n" << message << std::endl;
+        send(new_socket, message.c_str(), message.length(), 0);
+		usleep(1000);//probablemente no haga falta despues
+        close(new_socket);
+    }
 }
 
 Server::Server( void )

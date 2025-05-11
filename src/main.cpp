@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isainz-r <isainz-r@student.42madrid>       +#+  +:+       +#+        */
+/*   By: roallamos <roallamos@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:16:16 by isainz-r          #+#    #+#             */
-/*   Updated: 2025/03/04 11:16:18 by isainz-r         ###   ########.fr       */
+/*   Updated: 2025/04/27 12:57:04 by roallamos        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ int	main(int argc, char **argv)
 	}
 	webserv.setStdErrorPages();
 	std::cout << "DB: everything is ok" << std::endl;
+	webserv.webServlisten();
 	return (0);
 }
